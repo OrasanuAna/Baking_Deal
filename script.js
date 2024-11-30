@@ -104,7 +104,7 @@ const calcDisplaySummary = function (movements) {
     .filter(mov => mov > 0)
     .map(deposit => (deposit * 1.2) / 100)
     .filter((int, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
@@ -113,7 +113,7 @@ const calcDisplaySummary = function (movements) {
 calcDisplaySummary(account1.movements);
 
 // MAP
-console.log('---------- MAP ----------');
+// console.log('---------- MAP ----------');
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -124,8 +124,27 @@ const createUsername = function (accs) {
   });
 };
 createUsername(accounts);
-console.log(accounts);
+//console.log(accounts);
 
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //Prevent form from submitting
+  e.preventDefault();
+  // console.log('LOGIN');
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount.pin === Number(inputClosePin.value)) {
+    console.log('LOGIN');
+  }
+});
+
+/*
 ////////////////////////////////////////////////
 // FILTER
 console.log('---------- FILTER ----------');
@@ -202,3 +221,4 @@ console.log(accounts);
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+*/
