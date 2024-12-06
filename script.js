@@ -193,8 +193,16 @@ btnClose.addEventListener('click', function (e) {
       acc => acc.username === currentAccount.username
     );
     console.log(index);
-    //accounts.splice(index, 1);
+
+    // .indexOf(23)
+
+    //Delete account
+    accounts.splice(index, 1);
+
+    //Hide UI
+    containerApp.style.opacity = 0;
   }
+  inputCloseUsername.value = inputClosePin.value = '';
 });
 
 /*
