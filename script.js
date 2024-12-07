@@ -216,6 +216,25 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+// Handles loan requests:
+// 1. Prevents form submission.
+// 2. Validates: loan amount > 0 and any previous deposit is at least 10% of the requested amount.
+// 3. If valid: adds loan amount to account movements and updates the UI.
+// 4. Clears the loan input field.
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount = '';
+});
+
 // Handles account closure:
 // 1. Prevents form submission.
 // 2. Validates: username and PIN match the current account.
