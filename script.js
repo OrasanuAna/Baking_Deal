@@ -1,9 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -63,6 +59,10 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+// The displayMovements function renders transactions (deposits/withdrawals) in the UI:
+// 1. Clears the container to avoid duplicate entries.
+// 2. Iterates over the movements array to identify each transaction type.
+// 3. Creates and inserts an HTML template for each transaction at the top of the container.
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
 
@@ -82,11 +82,20 @@ const displayMovements = function (movements) {
   });
 };
 
+// The calcDisplayBalance function calculates and displays the account balance:
+// 1. Uses reduce() to sum up all movements in the acc.movements array.
+// 2. Stores the total in acc.balance.
+// 3. Updates the UI to display the balance in the labelBalance element.
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${acc.balance}Є`;
 };
 
+// The calcDisplaySummary function calculates and displays the account summary:
+// 1. Calculates total deposits (incomes) using filter() and reduce().
+// 2. Calculates total withdrawals (out) similarly and displays the absolute value.
+// 3. Calculates total interest earned on deposits that meet a minimum threshold (>= 1).
+// 4. Updates the UI with these values in their respective labels.
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
@@ -109,6 +118,16 @@ const calcDisplaySummary = function (acc) {
   labelSumInterest.textContent = `${interest}Є`;
 };
 
+// The createUsername function generates a username for each account:
+// 1. Converts the account owner's name to lowercase.
+// 2. Splits the name into an array of words.
+// 3. Maps each word to its first letter and joins them to form the username.
+// 4. Assigns the username to the acc.username property for each account in accs.
+
+// The updateUI function refreshes the user interface with the latest account data:
+// 1. Displays the list of movements using displayMovements.
+// 2. Calculates and updates the account balance with calcDisplayBalance.
+// 3. Calculates and updates the account summary with calcDisplaySummary.
 const createUsername = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -131,6 +150,16 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+// Event handler for the login button click event:
+// 1. Prevents the default form submission behavior with e.preventDefault().
+// 2. Finds the account matching the entered username using find().
+// 3. Verifies if the entered PIN matches the account's PIN.
+// 4. If valid:
+//    a. Displays a welcome message with the first name of the account owner.
+//    b. Makes the app interface visible by setting containerApp.style.opacity to 100.
+//    c. Clears the login input fields and removes focus from the PIN input.
+//    d. Updates the UI with the current account's data using updateUI.
+// 5. Logs the current account to the console for debugging.
 // Event handler
 let currentAccount;
 
@@ -159,6 +188,11 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
+// Handles money transfer:
+// 1. Prevents form submission and gets transfer amount and receiver's username.
+// 2. Clears input fields.
+// 3. Validates: amount > 0, receiver exists, enough balance, and not self-transfer.
+// 4. If valid: updates movements for both accounts and refreshes the UI.
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
@@ -182,6 +216,11 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+// Handles account closure:
+// 1. Prevents form submission.
+// 2. Validates: username and PIN match the current account.
+// 3. If valid: finds the account index, deletes it from accounts, and hides the UI.
+// 4. Clears input fields.
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -204,82 +243,3 @@ btnClose.addEventListener('click', function (e) {
   }
   inputCloseUsername.value = inputClosePin.value = '';
 });
-
-/*
-////////////////////////////////////////////////
-// FILTER
-console.log('---------- FILTER ----------');
-
-const deposits = movements.filter(function (mov) {
-  return mov > 0;
-});
-console.log(movements);
-console.log(deposits);
-
-const depositsFor = [];
-for (const mov of movements) if (mov > 0) depositsFor.push(mov);
-console.log(depositsFor);
-
-const withdrawals = movements.filter(function (mov) {
-  return mov < 0;
-});
-console.log(withdrawals);
-
-////////////////////////////////////////////////
-// REDUCE
-console.log('---------- REDUCE ----------');
-//const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
-
-// accumulator -> SNOWBALL
-// const balance = movements.reduce(function (acc, cur, i, arr) {
-//   console.log(`Iteration ${i}: ${acc}`);
-//   return acc + cur;
-// }, 0);
-
-const balance = movements.reduce((acc, cur) => acc + cur, 0);
-console.log(balance);
-
-let balance2 = 0;
-for (const mov of movements) balance2 += mov;
-console.log(balance2);
-
-// Maximum value
-console.log('---------- Maximum value ----------');
-const max = movements.reduce((acc, mov) => {
-  if (acc > mov) return acc;
-  else return mov;
-}, movements[0]);
-
-console.log(max);
-
-console.log('---------- The Magic of Chaining Methods ----------');
-
-const eurToUsd = 1.1;
-console.log(movements);
-
-// PIPELINE
-const totalDepositsUSD = movements
-  .filter(mov => mov > 0)
-  .map((mov, i, arr) => {
-    //console.log(arr);
-    return mov * eurToUsd;
-  })
-  // .map(mov => mov * eurToUsd)
-  .reduce((acc, mov) => acc + mov, 0);
-
-console.log(totalDepositsUSD);
-
-////////////////////////////////////////////////
-// THE FIND METHOD
-console.log('---------- The Find Methods ----------');
-
-const firstWithdrawal = movements.find(mov => mov < 0);
-
-console.log(movements);
-console.log(firstWithdrawal);
-console.log(accounts);
-
-const account = accounts.find(acc => acc.owner === 'Jessica Davis');
-console.log(account);
-*/
