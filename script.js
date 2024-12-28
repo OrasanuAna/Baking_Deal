@@ -1,36 +1,94 @@
 'use strict';
 
+/////////////////////////////////////////////////
+// BANKIST APP
+
+/////////////////////////////////////////////////
 // Data
+
 const account1 = {
   owner: 'Jonas Schmedtmann',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
+  currency: 'EUR',
+  locale: 'pt-PT', // de-DE
 };
 
 const account2 = {
   owner: 'Jessica Davis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-  interestRate: 1.5,
+  interestRate: 1.5, // %
   pin: 2222,
+
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
 const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
+  owner: 'Victoria Lancaster',
+  movements: [800, -400, 100, 300, -150, 700, -100, 500],
+  interestRate: 0.7, // %
   pin: 3333,
+
+  movementsDates: [
+    '2021-01-10T10:30:17.178Z',
+    '2021-02-14T14:42:02.383Z',
+    '2021-03-20T12:15:04.904Z',
+    '2021-04-15T09:17:24.185Z',
+    '2021-05-25T11:11:59.604Z',
+    '2021-06-30T17:01:17.194Z',
+    '2021-07-10T22:36:17.929Z',
+    '2021-08-15T08:51:36.790Z',
+  ],
+  currency: 'GBP',
+  locale: 'en-GB', // Great Britain
 };
 
 const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
+  owner: 'Sebastian Kingsley',
+  movements: [2500, -900, 700, 400, -50, 1200, -300, 800],
+  interestRate: 1, // %
   pin: 4444,
+
+  movementsDates: [
+    '2020-03-15T08:30:17.178Z',
+    '2020-04-10T12:42:02.383Z',
+    '2020-05-05T10:15:04.904Z',
+    '2020-06-20T13:17:24.185Z',
+    '2020-07-15T15:11:59.604Z',
+    '2020-08-10T14:01:17.194Z',
+    '2020-09-25T20:36:17.929Z',
+    '2020-10-30T09:51:36.790Z',
+  ],
+  currency: 'AUD',
+  locale: 'en-AU', // Australia
 };
 
 const accounts = [account1, account2, account3, account4];
 
+/////////////////////////////////////////////////
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -57,7 +115,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/////////////////////////////////////////////////
+// Functions
 
 const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
@@ -68,65 +127,43 @@ const displayMovements = function (movements, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
-     <div class="movements__row">
-       <div class="movements__type movements__type--${type}">${
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-       <div class="movements__value">${mov}Є</div>
-     </div>
+        <div class="movements__value">${mov}€</div>
+      </div>
     `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 
-// The calcDisplayBalance function calculates and displays the account balance:
-// 1. Uses reduce() to sum up all movements in the acc.movements array.
-// 2. Stores the total in acc.balance.
-// 3. Updates the UI to display the balance in the labelBalance element.
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}Є`;
+  labelBalance.textContent = `${acc.balance}€`;
 };
 
-// The calcDisplaySummary function calculates and displays the account summary:
-// 1. Calculates total deposits (incomes) using filter() and reduce().
-// 2. Calculates total withdrawals (out) similarly and displays the absolute value.
-// 3. Calculates total interest earned on deposits that meet a minimum threshold (>= 1).
-// 4. Updates the UI with these values in their respective labels.
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}Є`;
+  labelSumIn.textContent = `${incomes}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}Є`;
+  labelSumOut.textContent = `${Math.abs(out)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
-    .filter((int, i, arr) => {
-      // console.log(arr);
-      return int >= 1;
-    })
+    .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}Є`;
+  labelSumInterest.textContent = `${interest}€`;
 };
 
-// The createUsername function generates a username for each account:
-// 1. Converts the account owner's name to lowercase.
-// 2. Splits the name into an array of words.
-// 3. Maps each word to its first letter and joins them to form the username.
-// 4. Assigns the username to the acc.username property for each account in accs.
-
-// The updateUI function refreshes the user interface with the latest account data:
-// 1. Displays the list of movements using displayMovements.
-// 2. Calculates and updates the account balance with calcDisplayBalance.
-// 3. Calculates and updates the account summary with calcDisplaySummary.
-const createUsername = function (accs) {
+const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
       .toLowerCase()
@@ -135,34 +172,25 @@ const createUsername = function (accs) {
       .join('');
   });
 };
-createUsername(accounts);
+createUsernames(accounts);
 
 const updateUI = function (acc) {
-  //Display movements
+  // Display movements
   displayMovements(acc.movements);
 
-  //Display balance
+  // Display balance
   calcDisplayBalance(acc);
 
-  //Display summary
+  // Display summary
   calcDisplaySummary(acc);
 };
 
-// Event handler for the login button click event:
-// 1. Prevents the default form submission behavior with e.preventDefault().
-// 2. Finds the account matching the entered username using find().
-// 3. Verifies if the entered PIN matches the account's PIN.
-// 4. If valid:
-//    a. Displays a welcome message with the first name of the account owner.
-//    b. Makes the app interface visible by setting containerApp.style.opacity to 100.
-//    c. Clears the login input fields and removes focus from the PIN input.
-//    d. Updates the UI with the current account's data using updateUI.
-// 5. Logs the current account to the console for debugging.
-// Event handler
+///////////////////////////////////////
+// Event handlers
 let currentAccount;
 
 btnLogin.addEventListener('click', function (e) {
-  //Prevent form from submitting
+  // Prevent form from submitting
   e.preventDefault();
 
   currentAccount = accounts.find(
@@ -171,13 +199,13 @@ btnLogin.addEventListener('click', function (e) {
   console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    //Display UI and message
+    // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
 
-    //Clear input fields
+    // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
@@ -186,11 +214,6 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
-// Handles money transfer:
-// 1. Prevents form submission and gets transfer amount and receiver's username.
-// 2. Clears input fields.
-// 3. Validates: amount > 0, receiver exists, enough balance, and not self-transfer.
-// 4. If valid: updates movements for both accounts and refreshes the UI.
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
@@ -205,7 +228,7 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.balance >= amount &&
     receiverAcc?.username !== currentAccount.username
   ) {
-    //Doind the trandfer
+    // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
@@ -214,30 +237,21 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
-// Handles loan requests:
-// 1. Prevents form submission.
-// 2. Validates: loan amount > 0 and any previous deposit is at least 10% of the requested amount.
-// 3. If valid: adds loan amount to account movements and updates the UI.
-// 4. Clears the loan input field.
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
+
   const amount = Number(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
 
-    //Update UI
+    // Update UI
     updateUI(currentAccount);
   }
-  inputLoanAmount = '';
+  inputLoanAmount.value = '';
 });
 
-// Handles account closure:
-// 1. Prevents form submission.
-// 2. Validates: username and PIN match the current account.
-// 3. If valid: finds the account index, deletes it from accounts, and hides the UI.
-// 4. Clears input fields.
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -249,15 +263,15 @@ btnClose.addEventListener('click', function (e) {
       acc => acc.username === currentAccount.username
     );
     console.log(index);
-
     // .indexOf(23)
 
-    //Delete account
+    // Delete account
     accounts.splice(index, 1);
 
-    //Hide UI
+    // Hide UI
     containerApp.style.opacity = 0;
   }
+
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
