@@ -1,79 +1,45 @@
 # Banking Deal
 
-Banking Deal is a prototype web application that allows for bank account management. It includes functionalities such as money transfers, transaction history viewing, transaction sorting, and financial statistics calculation.
+This repository contains the **Banking Deal** application, a simple web-based project simulating a basic banking system. It allows users to log in and interact with the application using predefined credentials.
 
-## Key Features
+## Overview
 
-- **Authentication**: Users can access bank accounts using the specified username and password.
-- **Financial Transactions**:
-  - Transfer money between existing accounts.
-  - View and manage transaction history.
-- **Sorting**: Transactions can be sorted for clearer visualization.
-- **Statistics**: Calculate totals for deposits, withdrawals, and interest.
+The project showcases a modern and responsive design aimed at providing an intuitive user experience. Below is a preview of the interface:
 
-## Project Structure
+![Banking Deal Overview](https://github.com/OrasanuAna/Banking_Deal/blob/master/Banking_Deal.jpg)
 
-- `index.html`: The main file defining the webpage structure.
-- `style.css`: Stylesheet for a pleasant and responsive design.
-- `script.js`: Manages the application’s logic.
-- Images: Logo and icons used in the graphical interface.
+This project was developed as part of a web development course to practice and enhance skills in HTML, CSS, and JavaScript.
 
-## Usage Instructions
+## Credentials for Testing
 
-1. **Clone the repository**
+You can test the application using the following predefined credentials:
 
-```bash
-git clone https://github.com/OrasanuAna/Banking_Deal.git
-cd Banking_Deal
-```
+| Username | Password |
+|----------|----------|
+| js       | 1111     |
+| jd       | 2222     |
+| vl       | 3333     |
+| sk       | 4444     |
 
-2. **Open the application**
-   Open the `index.html` file in your browser or access the live version at:
-   [orasanuana.github.io/Banking_Deal/](https://orasanuana.github.io/Banking_Deal/).
+## Features
 
-3. **Available Credentials**
-
-The application comes with four pre-created accounts. The credentials are:
-
-| Username   | Password |
-|------------|----------|
-| ` js  `    | `1111`   |
-| ` jd  `    | `2222`   |
-| ` vl  `    | `3333`   |
-| ` sk  `    | `4444`   |
-
-> **Note**: It is not possible to create new accounts.
-
-4. **Navigation and Functionalities**
-
-   - Enter the username and password to log in.
-   - View the current balance, recent transactions, and account statistics.
-   - Use the transfer option to send money to other accounts.
-   - Click the sort button to organize transactions by value or date.
-
-## Advanced Features
-
-- **Sorted Transactions**: Use the sorting function to view transactions in ascending or descending order.
-- **Statistics**:
-  - Total deposits and withdrawals.
-  - Automatic calculation of interest based on the current balance.
-- **Transfers**: Transfer funds between existing accounts.
+- **User Login**: Secure login system with predefined credentials.
+- **User-Friendly Interface**: Modern design optimized for both desktop and mobile users.
+- **Simple Functionality**: Focused on simulating basic banking interactions.
 
 ## Technologies Used
 
-- **HTML5**: Application structure.
-- **CSS3**: Responsive and aesthetic design.
-- **JavaScript**: Application logic for interactions and data processing.
+- **HTML5**
+- **CSS3**
+- **JavaScript (vanilla)**
 
-## How to Contribute
+## Deployment
 
-This project is intended for educational purposes. External contributions are not currently accepted.
+The application is live and can be accessed at:  
+[Banking Deal Live Demo](https://orasanuana.github.io/Banking_Deal/)
 
-## License
+Feel free to test it using the credentials provided above.
 
-This project is public and may be used for learning or personal testing.
+## Author
 
----
-
-If you have questions or suggestions, contact Ana-Maria Orășanu via [GitHub profile](https://github.com/OrasanuAna).
-
+- [Ana-Maria Orășanu](https://github.com/OrasanuAna)
