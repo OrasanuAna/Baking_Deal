@@ -8,7 +8,7 @@ The project showcases a modern and responsive design aimed at providing an intui
 
 ![Banking Deal Overview](https://github.com/OrasanuAna/Banking_Deal/blob/master/Banking_Deal.jpg)
 
-This project was developed as part of a web development course to practice and enhance skills in HTML, CSS, and JavaScript.
+This project was developed as part of the **The Complete JavaScript Course: From Zero to Expert!** by **Jonas Schmedtmann** to practice and enhance skills in HTML, CSS, and JavaScript.
 
 ## Credentials for Testing
 
@@ -40,6 +40,7 @@ The application is live and can be accessed at:
 
 Feel free to test it using the credentials provided above.
 
-## Author
+## Credits
 
-- [Ana-Maria Orășanu](https://github.com/OrasanuAna)
+This project was developed as part of the **The Complete JavaScript Course: From Zero to Expert!** by **Jonas Schmedtmann**.
+
